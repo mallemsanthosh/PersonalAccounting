@@ -1,13 +1,16 @@
+#All Imports
 from distutils import command
 import tkinter as tk
 from tkinter import *
 from commoncode import *
 from CreatingTable import *
 
+#
 global i
 global entries 
 i =0
 entries={}
+#
 def submit(entries):
     entereiesdata =[]
     for j in entries:
@@ -15,6 +18,7 @@ def submit(entries):
         entereiesdata.append(str(entries[j].get())+" float")
     print (entereiesdata)
     createtable.createtab(entereiesdata)
+
 def mainview(firstsheet):
     global entries
     global i
