@@ -15,11 +15,13 @@ entries={}
 #Submitting the Form and adding the Columns in Database
 def submit(entries):
     entereiesdata =[]
+    fields='Null'
     for j in entries:
-        print (entries[j].get())
+        fields=fields+','+str(entries[j].get())
         entereiesdata.append(str(entries[j].get())+" float")
-    print (entereiesdata)
     createtable.createtab(entereiesdata)
+    createtable.remeber(fields)
+    
 
 #Defining the Frame
 def mainview(firstsheet):
