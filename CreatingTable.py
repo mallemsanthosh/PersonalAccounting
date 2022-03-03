@@ -7,4 +7,10 @@ class createtable:
         conn.close()
         print("Table is created")
 
+    def dummytab():
+        conn=sql.connect("Accounting.sqlite3")
+        curs=conn.cursor()
+        curs.execute("create table test('dummy float')")
+        conn.close()
+        print("Table is Created")    
 #createtable.createtab()    
