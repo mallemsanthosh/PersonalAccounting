@@ -51,15 +51,22 @@ def Conformation(screen,conformation):
         Submit(entries,screen)        
 
 def ConformationScreen(screen):
-    conformation=tk.Tk()
-    conformation.title("Conformation")
-    conformation.configure(bg="white")
-    l1=Label(conformation,text="\nAre you really Want to Submit The Fields",bg="white")
-    l1.pack()
-    b1=Button(conformation,text="OK",bg="gold",command=lambda: Conformation(screen,conformation))
-    b1.pack_configure(padx=50,pady=10,side=LEFT)
-    b2=Button(conformation,text="Cancle",bg="gold",command=conformation.destroy)
-    b2.pack(padx=50,pady=10,side=LEFT)
+    error=False
+    for j in entries:
+        if str(entries[j].get())=="" or str(entries[j].get())==" ":
+            Exit.Error(screen,tablefile="Table Error")
+            error=True
+            break
+    if error==False:
+        conformation=tk.Tk()
+        conformation.title("Conformation")
+        conformation.configure(bg="white")
+        l1=Label(conformation,text="\nAre you really Want to Submit The Fields",bg="white")
+        l1.pack()
+        b1=Button(conformation,text="OK",bg="gold",command=lambda: Conformation(screen,conformation))
+        b1.pack_configure(padx=50,pady=10,side=LEFT)
+        b2=Button(conformation,text="Cancle",bg="gold",command=conformation.destroy)
+        b2.pack(padx=50,pady=10,side=LEFT)
 
 #Main Frame
 def FirstSheet(screen=0):
