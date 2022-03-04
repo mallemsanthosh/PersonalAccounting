@@ -4,8 +4,11 @@ class CreateTable:
     def CreateTab(colum):
         conn=sql.connect("Accounting.sqlite3")
         curs=conn.cursor()
+        curs.execute("drop table if Exists accountdebit")
         curs.execute("create table accountdebit(Date date," + ','.join(colum) + ",Total float)")
+        curs.execute("drop table if Exists accountcredit")
         curs.execute("create table accountcredit(Date date," + ','.join(colum) + ",Total float)")
+        curs.execute("drop table if Exists accountbalance")
         curs.execute("create table accountbalance(Date date," + ','.join(colum) + ",Total float)")      
         conn.close()
         

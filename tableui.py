@@ -86,8 +86,8 @@ def FirstSheet(screen=0):
     firstsheet.mainloop()
 
 #Checking Whether Table is created or Not.
-class tablemain():
-    def mainloop():
+class Tablemain():
+    def Mainloop():
         try:
             CreateTable.DummyTab()
             FirstSheet()

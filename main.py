@@ -1,6 +1,8 @@
 import sqlite3 as sql
 import tableui
 
-def Main():
-    tableui.tablemain.mainloop()
-Main()
+class StartApp():
+    def Main():
+        tableui.Tablemain.Mainloop()
+
+StartApp.Main()

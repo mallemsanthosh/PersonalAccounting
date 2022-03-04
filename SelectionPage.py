@@ -56,10 +56,15 @@ def Mainfields(screen):
     b7 = Button(screen, text="Date_to_date Sheet", command=lambda : null(),width=15)
     b7.grid_configure(row=i, column=1,padx=10)
     i = i + 1
-    l22 = Label(text="This is for creating excel sheet", width=40, bg="white")
-    l22.grid(row=i, column=2, pady=5)
-    b22 = Button(screen, text="To Excel Sheet", command=lambda: null(), width=15)
-    b22.grid_configure(row=i, column=1, padx=10)
+    l9 = Label(text="This is for creating excel sheet", width=40, bg="white")
+    l9.grid(row=i, column=2, pady=5)
+    b9 = Button(screen, text="To Excel Sheet", command=lambda: null(), width=15)
+    b9.grid_configure(row=i, column=1, padx=10)
+    i = i + 1
+    l10 = Label(text="This is for To Delete Your Account", width=40, bg="white")
+    l10.grid(row=i, column=2, pady=5)
+    b10 = Button(screen, text="Delete Account", command=lambda: Exit.Exit(screen,tablefile="Drop"), width=15)
+    b10.grid_configure(row=i, column=1, padx=10)
     i = i + 1
 
     l8 = Label(text="This is for Exit", width=40, bg="white")
