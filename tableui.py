@@ -16,10 +16,11 @@ entries={}
 #Submitting the Form and adding the Columns in Database
 def Submit(entries,screen):
     entereiesdata =[]
-    fields='Null'
+    fields='Date'
     for j in entries:
         fields=fields+','+str(entries[j].get())
         entereiesdata.append(str(entries[j].get())+" float")
+    fields=fields+','+'Total'
     CreateTable.CreateTab(entereiesdata)    #Create Table
     CreateTable.Remeber(fields) #Rember the Fields for Future Use
     screen.destroy()            #Destroy the Screen
@@ -34,7 +35,7 @@ def Mainview(firstsheet):
     row = tk.Frame(firstsheet)
     lab = tk.Label(row, width=15, text=("Enter"+str(i)) + "\t: ", anchor='w')
     ent = tk.Entry(row, width=15)
-    ent.insert(0, " ")
+    ent.insert(0, "")
     row.pack(side=tk.TOP,
                  fill=tk.X,
                  padx=100,

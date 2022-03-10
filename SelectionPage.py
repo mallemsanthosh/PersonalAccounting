@@ -4,6 +4,7 @@ import tkinter as tk
 from tkinter import *
 from commoncode import *
 from CreatingTable import *
+from Entry import *
 #null function
 def null():
     print("Hello")
@@ -12,7 +13,7 @@ def Mainfields(screen):
     i=1
     l0 = Label(text="This is for All entry sheet", width=40, bg="white")
     l0.grid(row=i, column=2, pady=5)
-    b0 = Button(screen, text="ALL Entry sheet", command=lambda: null(),width=15)
+    b0 = Button(screen, text="ALL Entry sheet", command=lambda: AllEntrytLoop(screen) ,width=15)
     b0.grid_configure(row=i, column=1, pady=5, padx=10)
     i = i + 1
     l15 = Label(text="This is for Balance Update", width=40, bg="white")

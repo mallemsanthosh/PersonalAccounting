@@ -1,5 +1,5 @@
-class encodess():
-    def encodes(data):
+class Encodess():
+    def Encodes(data):
         encodestr=""
         enco = {
              'a':"46cd", 'b':"32gb", 'c':"45ef", 'd':"89ef", 'e':"75wf", 'f':"56rt", 'g':"78rt", 'h':"76ty", 'i':"35er", 'j':"26et",
@@ -18,8 +18,8 @@ class encodess():
                     encodestr=encodestr+"0"+enco[j]
         return encodestr
 
-class decodess():
-    def decodes(data):
+class Decodess():
+    def Decodes(data):
         decodestr=""
         decodelist=[]
         enco = {
@@ -39,6 +39,6 @@ class decodess():
             decodestr=decodestr+i
         return decodestr
 
-#en=encodess.encodes("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 .")
+#en=Encodess.Encodes("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 .")
 #print(en,'encode')
-#print(decodess.decodes(en),'decode')
+#print(Decodess.Decodes(en),'decode')

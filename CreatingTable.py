@@ -35,4 +35,21 @@ class CreateTable:
         conn.commit()
         conn.close()
     
-#createtable.dummytab()
+    def Fields():
+        cr_fields=[]
+        de_fields=[]
+        bal_fields=[]
+        conn=sql.connect("Accounting.sqlite3")
+        curs=conn.cursor()
+        curs.execute("select * from test")
+        field=curs.fetchall()
+        fields=field[0][0].split(",")
+        conn.close()
+        for f in fields:
+            if f!='Null':
+                cr_fields.append('Cr_'+str(f))
+                de_fields.append('Del_'+str(f))
+                bal_fields.append('Bal_'+str(f))
+        return (cr_fields,de_fields,bal_fields)
+    
+#print(CreateTable.Fields())
