@@ -19,7 +19,7 @@ def Submit(entries,screen):
     fields='Date'
     for j in entries:
         fields=fields+','+str(entries[j].get())
-        entereiesdata.append(str(entries[j].get())+" float")
+        entereiesdata.append(str(entries[j].get())+" varchar(100)")
     fields=fields+','+'Total'
     CreateTable.CreateTab(entereiesdata)    #Create Table
     CreateTable.Remeber(fields) #Rember the Fields for Future Use
