@@ -9,7 +9,7 @@ class Encodess():
              'K':'86jk', 'L':'89ji', 'M':'99GK', 'N':'99gh', 'O':'93ln', 'P':'95nm', 'Q':'22gh', 'R':'34hy', 'S':'12he', 'T':'34su',
              "U":'12ra', 'V':'67rt', 'W':'32er', 'X':'55ra', 'Y':'33cv', 'Z':'32ep',
              '1':'12As', '2':'45We', '3':'44Sr', '4':'89Sd', '5':'99We', '6':'66Ft', '7':'22Et', '8':'88Er', '9':"44De", '0':"44Ww",
-             '.':'AD45', ' ':'DF45', '-':'SB56'} 
+             '.':'AD45', ' ':'DF45', '-':'SB56', '@':'AD67'} 
 
         data=list(str(data))
         for i in data:
@@ -30,7 +30,7 @@ class Decodess():
              'K':'86jk', 'L':'89ji', 'M':'99GK', 'N':'99gh', 'O':'93ln', 'P':'95nm', 'Q':'22gh', 'R':'34hy', 'S':'12he', 'T':'34su',
              "U":'12ra', 'V':'67rt', 'W':'32er', 'X':'55ra', 'Y':'33cv', 'Z':'32ep',
              '1':'12As', '2':'45We', '3':'44Sr', '4':'89Sd', '5':'99We', '6':'66Ft', '7':'22Et', '8':'88Er', '9':"44De", '0':"44Ww",
-             '.':'AD45', ' ':'DF45', '-':'SB56' }
+             '.':'AD45', ' ':'DF45', '-':'SB56', '@':'AD67' }
         data=data.split("0")
         for i in data:
             key=[k for k, v in enco.items() if v==i]
@@ -39,6 +39,5 @@ class Decodess():
             decodestr=decodestr+i
         return decodestr
 
-#en=Encodess.Encodes("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLNMOPQRSTUVWXYZ0123456789 .-")
-#print(en,'encode')   
-#print(Decodess.Decodes(en),'decode')
+#print(Decodess.Decodes('12As044Ww044Ww0'))
+#print(Decodess.Decodes('45We044Ww044Ww0'))

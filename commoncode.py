@@ -1,7 +1,25 @@
 import tkinter as tk
 from tkinter import *
 from CreatingTable import *
-import tableui
+import tkinter.font as TkFont
+
+#import tableui
+
+def Commonscreen(screen,maintitle,titless):
+    screen.title(maintitle)
+    screen.configure(background='#FFFACD')
+
+    bfont = TkFont.Font(family='Times New Roman', weight = 'bold', size = 25)
+    afont = TkFont.Font(family='Times New Roman', weight = 'bold', size = 15)
+    
+    Titel=Label(screen,text='\nPERSONAL ACCOUNTING',fg='red',background='#FFFACD')
+    Titel['font']=bfont
+    Titel.pack(anchor='center',pady=10)
+    Titel=Label(screen,text='\n'+titless,fg='blue',background="#FFFACD")
+    Titel['font']=afont
+    Titel.pack(anchor='center',pady=15)
+
+
 
 def Exit1(screen,conformation,tablefile):
         conformation.destroy()
@@ -11,7 +29,7 @@ def Exit1(screen,conformation,tablefile):
             CreateTable.Drop()
         elif(tablefile=="Drop"):
             CreateTable.Drop()
-            tableui.Tablemain.Mainloop()
+  #          tableui.Tablemain.Mainloop()
         
 class Exit():
     def Exit(screen,tablefile=FALSE):
