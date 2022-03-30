@@ -5,10 +5,29 @@ from commoncode import *
 from Registration import *
 
 import tableui
-#def Validationlogic(username,password):
+def ValidationLogic(username,password,label3,validate):
+    if username.get()=="" and password.get()=="":
+        label3['text']="Enter User Name and Password"
+        label3['fg']='red'
+    elif password.get()=="":
+        label3['text']="Enter Password"
+        label3['fg']='red'
+    elif username.get()=="":
+        label3['text']="Enter User Name"
+        label3['fg']='red'
+    else:
+        result=CreateTable.Validate(username.get(),password.get())
+        if result==[] or result[0][1]!=username.get():
+            label3['text']="Enter Valid User Name and Password"
+            label3['fg']='red'
+        else:
+            if result[0][2]==password.get():
+                label3['text']="Success"
+                label3['fg']='green'
 
-
-
+            else:
+                label3['text']="Password Wrong"
+                label3['fg']='red'
 
 class StartApp():
     def Validation():
@@ -49,6 +68,10 @@ class StartApp():
         password.insert(0, "")
         password['font']=cfont
         password.pack()
+
+        label3=Label(row,text='',background="#FFFACD")
+        label3['font']=cfont
+        label3.pack()
         
         row2=tk.Frame(validatee,background="#FFFACD")
         row2.pack(side=tk.TOP,
@@ -64,13 +87,11 @@ class StartApp():
                     padx=50,
                     pady=20,
                     anchor=CENTER)
-        b1=Button(row3,text="Submit",command= (lambda e1=username,e2=password : StartApp.Main() ))
+        b1=Button(row3,text="Login",command= (lambda e1=username,e2=password : ValidationLogic(e1,e2,label3,validatee) ))
         b1.pack(side=LEFT,padx=20)
         b2=Button(row3,text="Exit",command= lambda : Exit.Exit(validatee))
         b2.pack(side=RIGHT,padx=20)
 
         validatee.mainloop()
-    def Main():
-        tableui.Tablemain.Mainloop()
 
 StartApp.Validation()

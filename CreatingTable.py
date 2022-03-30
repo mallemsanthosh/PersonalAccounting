@@ -86,6 +86,16 @@ class CreateTable:
         finally:
             conn.close()
 
+    def Validate(username,password):
+        conn=sql.connect("Accounting.sqlite3")
+        curs=conn.cursor() 
+        curs.execute('select Dummy,User_Name,Password from test where User_Name=? or Password=?',(username,password))
+        data=curs.fetchall()
+        conn.close()
+        return (data)
+
+
 #Example Test
 #colum="Name varchar(225),Ram varchar(225)"    
 #CreateTable.CreateTab(colum,"name10")
+#CreateTable.Validate("SaiRam","99490638")
