@@ -22,7 +22,6 @@ def RegistrationSubmit(entry1,screen,label3):
             else:
                 label3['text']="Enter Valid Email and Valid Phone Number"
                 label3['fg']='red'
-                
     else:
         label3['text']="Enter All Fields"
         label3['fg']='red'
