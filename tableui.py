@@ -97,11 +97,6 @@ def FirstSheet(entries1,screenreg):
 #Checking Whether Table is created or Not.
 class Tablemain():
     def Mainloop(entriess,screenreg):
-        try:
-            CreateTable.DummyTab()            
-        except sqlite3.OperationalError as ram:
-            pass
-        finally:
-            FirstSheet(entriess,screenreg)
+        FirstSheet(entriess,screenreg)
 
 #tablemain.mainloop()

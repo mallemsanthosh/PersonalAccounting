@@ -3,8 +3,9 @@ from tkinter import *
 import tkinter.font as TkFont
 from commoncode import *
 from Registration import *
+from CreatingTable import *
+from SelectionPage import *
 
-import tableui
 def ValidationLogic(username,password,label3,validate):
     if username.get()=="" and password.get()=="":
         label3['text']="Enter User Name and Password"
@@ -18,13 +19,13 @@ def ValidationLogic(username,password,label3,validate):
     else:
         result=CreateTable.Validate(username.get(),password.get())
         if result==[] or result[0][1]!=username.get():
-            label3['text']="Enter Valid User Name and Password"
+            label3['text']="Enter Valid User Name and Password\n or Regiester to Login"
             label3['fg']='red'
         else:
             if result[0][2]==password.get():
                 label3['text']="Success"
                 label3['fg']='green'
-
+                SelectionPage.Main(validate)
             else:
                 label3['text']="Password Wrong"
                 label3['fg']='red'
@@ -34,6 +35,8 @@ class StartApp():
         validatee=tk.Tk()
         validatee.title("Login Screen")
         validatee.configure(background='#FFFACD')
+
+        CreateTable.DummyTab()
 
         bfont = TkFont.Font(family='Times New Roman', weight = 'bold', size = 25)
         afont = TkFont.Font(family='Times New Roman', weight = 'bold', size = 15)

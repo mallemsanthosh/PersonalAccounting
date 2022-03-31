@@ -18,7 +18,7 @@ class CreateTable:
     def DummyTab():
         conn=sql.connect("Accounting.sqlite3")
         curs=conn.cursor()
-        curs.execute("create table test(Dummy varchar(225),User_Name varchar(100) not null unique,Password varchar(225) not null,Phone_Number varchar(225),Email varchar(225),Name varchar(225) )")
+        curs.execute("create table if not Exists test(Dummy varchar(225),User_Name varchar(100) not null unique,Password varchar(225) not null,Phone_Number varchar(225),Email varchar(225),Name varchar(225) )")
         conn.close()
         
 #To Store or remember our Fields
@@ -30,12 +30,7 @@ class CreateTable:
         conn.close()
 
 #To Delete or Drop Table
-    def Drop():
-        conn=sql.connect("Accounting.sqlite3")
-        curs=conn.cursor()
-        curs.execute("drop table if Exists test")
-        conn.commit()
-        conn.close()
+    #def Drop():
     
     def Fields():
         cr_fields=[]
@@ -93,7 +88,14 @@ class CreateTable:
         data=curs.fetchall()
         conn.close()
         return (data)
-
+    
+    def CheckUsername(username):
+        conn=sql.connect("Accounting.sqlite3")
+        curs=conn.cursor() 
+        curs.execute('select User_Name from test where User_Name=?',(username,))
+        data=curs.fetchall()
+        conn.close()
+        return (data)
 
 #Example Test
 #colum="Name varchar(225),Ram varchar(225)"    

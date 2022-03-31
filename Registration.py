@@ -5,22 +5,36 @@ import tkinter.font as TkFont
 import re
 from commoncode import *
 import tableui
+from CreatingTable import CreateTable 
 
 def RegistrationSubmit(entry1,screen,label3):
+    chechdata=CreateTable.CheckUsername(entry1['User Name'].get())
     if entry1['User Name'].get()!= "" and entry1['Password'].get()!="" and entry1['Name'].get()!="" and entry1['Phone'].get()!="" and entry1['Email'].get()!="":
         pat = "^[a-zA-Z0-9-_]+@[a-zA-Z0-9]+\.[a-z]{1,3}$"
         pat2="[7-9][0-9]{9}"
-        if re.match(pat,entry1['Email'].get()) and re.match(pat2,entry1['Phone'].get()):
+        if re.match(pat,entry1['Email'].get()) and re.match(pat2,entry1['Phone'].get()) and len(chechdata)==0:
             tableui.Tablemain.Mainloop(entry1,screen)            
         else:
-            if re.match(pat,entry1['Email'].get()) and not re.match(pat2,entry1['Phone'].get()):
+            if re.match(pat,entry1['Email'].get()) and not re.match(pat2,entry1['Phone'].get()) and len(chechdata)==0:
                 label3['text']="Enter Valid Phone Number"
                 label3['fg']='red'
-            elif not re.match(pat,entry1['Email'].get()) and re.match(pat2,entry1['Phone'].get()):
+            elif not re.match(pat,entry1['Email'].get()) and re.match(pat2,entry1['Phone'].get()) and len(chechdata)==0:
                 label3['text']="Enter Valid Email"
                 label3['fg']='red'
+            elif not re.match(pat,entry1['Email'].get()) and not re.match(pat2,entry1['Phone'].get()) and len(chechdata)==0:
+                label3['text']="Enter Valid Email and Phone"
+                label3['fg']='red'
+            elif  re.match(pat,entry1['Email'].get()) and re.match(pat2,entry1['Phone'].get()) and len(chechdata)!=0:
+                label3['text']="Try Another User Name"
+                label3['fg']='red'
+            elif  re.match(pat,entry1['Email'].get()) and not re.match(pat2,entry1['Phone'].get()) and len(chechdata)!=0:
+                label3['text']="Try Another User Name and valid Phone Number"
+                label3['fg']='red'
+            elif  not re.match(pat,entry1['Email'].get()) and re.match(pat2,entry1['Phone'].get()) and len(chechdata)!=0:
+                label3['text']="Try Another User Name and valid Email"
+                label3['fg']='red'
             else:
-                label3['text']="Enter Valid Email and Valid Phone Number"
+                label3['text']="Try another User Name,Enter Valid Email and Phone Number"
                 label3['fg']='red'
     else:
         label3['text']="Enter All Fields"
