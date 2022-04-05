@@ -4,15 +4,16 @@ import tkinter as tk
 from tkinter import *
 from commoncode import *
 from Entry import *
+from Logout import *
 
 #null function
 def null():
     print("Hello")
 
-def Mainfields(screen):
+def Mainfields(screen,screen1,username):
     selectframe=[{"label":"This is for All entry sheet",
                   "button":"ALL Entry sheet",
-                  "ram":(lambda: AllEntrytLoop(screen))},
+                  "ram":(lambda: AllEntrytLoop(username,screen1))},
                   {"label":"This is for Balance Update",
                   "button":"Balance_Update",
                   "ram":(lambda: null())},
@@ -42,7 +43,7 @@ def Mainfields(screen):
                   "ram":lambda: Exit.Exit(screen,tablefile="Drop")},
                   {"label":"This is for Logout",
                   "button":"Logout",
-                  "ram":lambda : Exit.Exit(screen)},
+                  "ram":lambda : Logout.Logout()},
                   {"label":"This is for Exit",
                   "button":"Exit",
                   "ram":lambda : Exit.Exit(screen)}]
@@ -50,15 +51,15 @@ def Mainfields(screen):
     for a in range (len(selectframe)):
         row = tk.Frame(screen,background='#FFFACD')
         l0 = Label(row,text=selectframe[a]['label'], width=40,bg="#FFFACD")
-        b0 = Button(row, text=selectframe[a]['button'],width=15,command=selectframe[a]['ram'])
+        b0 = Button(row, text=selectframe[a]['button'],width=20,height=1,command=selectframe[a]['ram'])
         row.pack(side=tk.TOP,anchor=CENTER,
-                padx=5,
-                pady=5)
-        l0.pack(side=RIGHT, pady=5)
-        b0.pack(side=LEFT, pady=5, padx=10)
+                padx=2,
+                pady=2)
+        l0.pack(side=RIGHT, pady=2)
+        b0.pack(side=LEFT, pady=2, padx=5)
 
 class SelectionPage():
-    def Main(screen1=0):
+    def Main(username,screen1=0):
         screen1.destroy()
 
         screen=tk.Tk()
@@ -72,7 +73,7 @@ class SelectionPage():
                     pady=10,
                     anchor=CENTER)
         
-        Mainfields(row2)
+        Mainfields(row2,screen,username)
         screen.mainloop()
 
 #SelectionPage.Main()

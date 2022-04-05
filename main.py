@@ -17,7 +17,7 @@ def ValidationLogic(username,password,label3,validate):
         label3['text']="Enter User Name"
         label3['fg']='red'
     else:
-        result=CreateTable.Validate(username.get(),password.get())
+        result=CreateTable.Validate(username.get())
         if result==[] or result[0][1]!=username.get():
             label3['text']="Enter Valid User Name and Password\n or Regiester to Login"
             label3['fg']='red'
@@ -25,7 +25,7 @@ def ValidationLogic(username,password,label3,validate):
             if result[0][2]==password.get():
                 label3['text']="Success"
                 label3['fg']='green'
-                SelectionPage.Main(validate)
+                SelectionPage.Main(username.get(),validate)
             else:
                 label3['text']="Password Wrong"
                 label3['fg']='red'

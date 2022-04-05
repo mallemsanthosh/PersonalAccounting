@@ -15,7 +15,7 @@ def Commonscreen(screen,maintitle,titless):
     Titel=Label(screen,text='\nPERSONAL ACCOUNTING',fg='red',background='#FFFACD')
     Titel['font']=bfont
     Titel.pack(anchor='center')
-    Titel=Label(screen,text='\n'+titless,fg='blue',background="#FFFACD")
+    Titel=Label(screen,text=titless,fg='blue',background="#FFFACD")
     Titel['font']=afont
     Titel.pack(anchor='center')
 
