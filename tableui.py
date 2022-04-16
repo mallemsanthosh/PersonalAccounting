@@ -1,5 +1,4 @@
 #All Imports
-import sqlite3
 import tkinter as tk
 from tkinter import *
 from commoncode import *
@@ -48,11 +47,11 @@ def Conformation(screen,conformation,entries1,screenreg):
         conformation.destroy()
         Submit(entries,screen,entries1,screenreg)        
 
-def ConformationScreen(screen,entries1,screenreg):
+def ConformationScreen(screen,entries1,screenreg,row1):
     error=False
     for j in entries:
         if str(entries[j].get())=="" or str(entries[j].get())==" ":
-            Exit.Error(screen,tablefile="Table Error")
+            row1['text']="Enter ALl Fields"
             error=True
             break
     if error==False:
@@ -76,9 +75,9 @@ def FirstSheet(entries1,screenreg):
     Mainview(firstsheet,cfont)  
     
     row3 = tk.Frame(firstsheet,background='#FFFACD')
-    b1=tk.Button(row3,text="Submit",command=lambda: ConformationScreen(firstsheet,entries1,screenreg))
+    b1=tk.Button(row3,text="Submit",command=lambda: ConformationScreen(firstsheet,entries1,screenreg,labeler))
     b1.pack(side=tk.LEFT)
-    b2=tk.Button(row3,text="Exit", command= lambda : Exit.Exit(firstsheet,tablefile=True))
+    b2=tk.Button(row3,text="Exit", command= lambda : Exit.Exit(firstsheet))
     b2.pack(side=tk.LEFT,padx=50)
     row3.pack(side=tk.BOTTOM,
             fill=tk.X,
@@ -88,10 +87,12 @@ def FirstSheet(entries1,screenreg):
     row2 = tk.Frame(firstsheet,background='#FFFACD')
     btn = tk.Button(row2, width=15,text="ADD", command = (lambda  : Mainview(firstsheet,cfont)))
     btn.pack(side=tk.LEFT, padx=10)
+    labeler=Label(row2,text="",background='#FFFACD',fg='red').pack()
     row2.pack(side=tk.BOTTOM,
             fill=tk.X,
                  padx=150,
                  pady=10,anchor=CENTER)             
+    
     firstsheet.mainloop()
 
 #Checking Whether Table is created or Not.

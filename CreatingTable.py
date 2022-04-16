@@ -9,9 +9,11 @@ class CreateTable:
         debit="create table if not Exists "+name1+"debit(Date date," +','.join(colum) + ",Total varchar(150))"
         credit="create table if not Exists "+name1+"credit(Date date," +','.join(colum)+ ",Total varchar(150))"
         balance="create table if not Exists "+name1+"balance(Date date," +','.join(colum) + ",Total varchar(150))"
+        normal="create table if not Exists reamarklog(User_Name varchar(100) not null,Date date,Bank_Name varchar(100),Remark varchar(225),Amount varchar(100))"
         curs.execute(debit)
         curs.execute(credit)
         curs.execute(balance)      
+        curs.execute(normal)
         conn.close()
         
 #To find whether the table is created or Not.
@@ -121,6 +123,27 @@ class CreateTable:
         finally:
             conn.close()
     
+    def BalanceEntry(bal_fields_list,fields,username):
+        conn=sql.connect("Accounting.sqlite3")
+        curs=conn.cursor() 
+        val="?"
+        for i in range(1,len(bal_fields_list)):
+            val=val+','+'?'
+        babr_value=[]
+        for i in range (0,len(fields)):
+                if i==0:
+                    babr_value.append(bal_fields_list[i])
+                else:
+                    babr_value.append(Encodess.Encodes(str(bal_fields_list[i])))
+        try:
+            insertbalance="insert into "+username+"balance values(" +val+ ")"
+            curs.execute(insertbalance,babr_value)
+            conn.commit()   
+        except sql.IntegrityError as ei:
+                pass
+        finally:
+            conn.close()
+    
     def CheckBalance(username,date):
         conn=sql.connect("Accounting.sqlite3")
         curs=conn.cursor() 
@@ -128,7 +151,20 @@ class CreateTable:
         data=curs.fetchall()
         conn.close()
         return (data)
-
+    
+    def DeleteAccount(username):
+        conn=sql.connect("Accounting.sqlite3")
+        curs=conn.cursor() 
+        curs.execute('Delete From test where User_Name=?',(username,))
+        cr='Drop Table '+username+'credit'
+        bal='Drop Table '+username+'balance'
+        de='Drop Table '+username+'debit'
+        curs.execute(cr)
+        curs.execute(bal)
+        curs.execute(de)
+        conn.commit()
+        conn.close()
+        
     def Validate(username):
         conn=sql.connect("Accounting.sqlite3")
         curs=conn.cursor() 
@@ -153,3 +189,5 @@ class CreateTable:
 #fields=["Date","SBI","DCCB","Total"]
 #cr_fields_list=["21-04-2022",'12.20','100.20',"2021.20"]
 #CreateTable.CreditEntry(cr_fields_list,fields,"SaiRam")
+
+#CreateTable.CreateTab('Sai')
