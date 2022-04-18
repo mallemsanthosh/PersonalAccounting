@@ -32,7 +32,7 @@ def SubmitEntry(entries1,entries2,cr_fields,de_fields,fields,row,username,row1,r
     CreateTable.CreditEntry(cr_fields_list,fields,username)  
     CreateTable.DebitEntry(de_fields_list,fields,username)
     
-    data=CreateTable.CheckBalance(username,str(entries1['Date'].get()))
+    data,cr,de=CreateTable.CheckBalance(username,str(entries1['Date'].get()))
 
     Label(row,text="Current Balances",font=cfont,fg='purple2').pack(anchor=CENTER)
     for i in range (0,len(fields)):
@@ -72,7 +72,7 @@ def Cr_SubmitEntry(entries1,cr_fields,fields,row,username,row1,cfont,b1):
 
     CreateTable.CreditEntry(cr_fields_list,fields,username)  
     
-    data=CreateTable.CheckBalance(username,str(entries1['Date'].get()))
+    data,cr,deb=CreateTable.CheckBalance(username,str(entries1['Date'].get()))
 
     Label(row,text="Current Balances",font=cfont,fg='purple2').pack(anchor=CENTER)
     for i in range (0,len(fields)):
@@ -87,7 +87,7 @@ def Cr_SubmitEntry(entries1,cr_fields,fields,row,username,row1,cfont,b1):
         else:
             Label(row11,text=fields[i]+'\t:\t'+Decodess.Decodes(data[-1][i]),font=cfont,background="#FFFACD").pack(side=tk.LEFT)
     
-    Label(row,text="Present Credit and Debit Totals",font=cfont,fg='purple2').pack(anchor=CENTER)
+    Label(row,text="Present Credit Totals",font=cfont,fg='purple2').pack(anchor=CENTER)
     Label(row,text="The total Credit is\t :\t "+str(cr_total),background="#FFFACD",font=cfont).pack()
     
     row1.destroy()
@@ -111,7 +111,7 @@ def De_SubmitEntry(entries2,de_fields,fields,row,username,row2,cfont,b1):
 
     CreateTable.DebitEntry(de_fields_list,fields,username)
     
-    data=CreateTable.CheckBalance(username,str(entries2['Date'].get()))
+    data,cr,deb=CreateTable.CheckBalance(username,str(entries2['Date'].get()))
 
     Label(row,text="Current Balances",font=cfont,fg='purple2').pack(anchor=CENTER)
     for i in range (0,len(fields)):
@@ -278,4 +278,4 @@ def DebitEntry(username):
 
 
 
-#AllEntrytLoop('SaiRam')
+#AllEntrytLoop('Ram')

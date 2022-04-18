@@ -1,12 +1,15 @@
 import tkinter as tk
 from tkinter import *
 from CreatingTable import *
-from Logout import *
+import sys
+import os
+
 
 def Conformation(username,conformation):
     conformation.destroy()
     CreateTable.DeleteAccount(username)
-    Logout.Logout()        
+    python = sys.executable
+    os.execl(python, python, * sys.argv)        
 
 
 class DeleteAccount:
