@@ -1,10 +1,11 @@
-from lib2to3.pgen2 import driver
+#Sql/DataBase Related Imports
 import sqlite3 as sql
-
 from sqlalchemy import null
 
+#For Encoding and Decoding Related Import
 from ownenanddecode import *
-from Date import *
+
+
 class CreateTable:
 #To Create Table
     def CreateTab(colum,name1):
@@ -13,38 +14,34 @@ class CreateTable:
         debit="create table if not Exists "+name1+"debit(Date date," +','.join(colum) + ",Total varchar(150))"
         credit="create table if not Exists "+name1+"credit(Date date," +','.join(colum)+ ",Total varchar(150))"
         balance="create table if not Exists "+name1+"balance(Date date," +','.join(colum) + ",Total varchar(150))"
-        normal="create table if not Exists reamarklog(User_Name varchar(100) not null,Date date,Bank_Name varchar(100),Remark varchar(225),Amount varchar(100))"
         curs.execute(debit)
         curs.execute(credit)
         curs.execute(balance)      
-        curs.execute(normal)
         conn.close()
         
-#To find whether the table is created or Not.
-    def DummyTab():
+#For New Users, Creating Database and Create Authentication Table for Authentication.
+    def AuthenticationTab():
         conn=sql.connect("Accounting.sqlite3")
         curs=conn.cursor()
-        curs.execute("create table if not Exists test(Dummy varchar(225),User_Name varchar(100) not null unique,Password varchar(225) not null,Phone_Number varchar(225),Email varchar(225),Name varchar(225) )")
+        curs.execute("create table if not Exists Authentication(Dummy varchar(225),User_Name varchar(100) not null unique,Password varchar(225) not null,Phone_Number varchar(225),Email varchar(225),Name varchar(225) )")
         conn.close()
         
 #To Store or remember our Fields
     def Remeber(tcolum,enteries):
         conn=sql.connect("Accounting.sqlite3")
         curs=conn.cursor()
-        curs.execute("insert into test  values(?,?,?,?,?,?)",(tcolum,enteries['User Name'].get(),str(enteries['Password'].get()),str(enteries["Phone"].get()),enteries["Email"].get(),enteries["Name"].get()))
+        curs.execute("insert into Authentication  values(?,?,?,?,?,?)",(tcolum,enteries['User Name'].get(),str(enteries['Password'].get()),str(enteries["Phone"].get()),enteries["Email"].get(),enteries["Name"].get()))
         conn.commit()
         conn.close()
 
-#To Delete or Drop Table
-    #def Drop():
-    
+#For Getting the User Fields for Layout Making.    
     def Fields(username):
         cr_fields=[]
         de_fields=[]
         bal_fields=[]
         conn=sql.connect("Accounting.sqlite3")
         curs=conn.cursor()
-        curs.execute("select * from test where User_Name=?",(username,))
+        curs.execute("select * from Authentication where User_Name=?",(username,))
         field=curs.fetchall()
         fields=field[0][0].split(",")
         conn.close()
@@ -55,6 +52,7 @@ class CreateTable:
                 bal_fields.append('Bal_'+str(f))
         return (cr_fields,de_fields,bal_fields,fields)
 
+#For Credit Update
     def CreditEntry(cr_fields_list,fields,username):
         conn=sql.connect("Accounting.sqlite3")
         curs=conn.cursor() 
@@ -90,7 +88,8 @@ class CreateTable:
                 pass
         finally:
             conn.close()
-    
+
+ #For Debit Update...   
     def DebitEntry(deb_fields_list,fields,username):
         conn=sql.connect("Accounting.sqlite3")
         curs=conn.cursor() 
@@ -126,7 +125,8 @@ class CreateTable:
                 pass
         finally:
             conn.close()
-    
+
+#For Balance Update..    
     def BalanceEntry(bal_fields_list,fields,username):
         conn=sql.connect("Accounting.sqlite3")
         curs=conn.cursor() 
@@ -147,7 +147,8 @@ class CreateTable:
                 pass
         finally:
             conn.close()
-    
+
+#For Checking the Balance    
     def CheckBalance(username,date):
         conn=sql.connect("Accounting.sqlite3")
         curs=conn.cursor() 
@@ -164,11 +165,12 @@ class CreateTable:
         deb_data=curs.fetchall()
         conn.close()
         return (data,cre_data,deb_data)
-    
+
+#For Deleting the User Account..   
     def DeleteAccount(username):
         conn=sql.connect("Accounting.sqlite3")
         curs=conn.cursor() 
-        curs.execute('Delete From test where User_Name=?',(username,))
+        curs.execute('Delete From Authentication where User_Name=?',(username,))
         cr='Drop Table '+username+'credit'
         bal='Drop Table '+username+'balance'
         de='Drop Table '+username+'debit'
@@ -177,23 +179,26 @@ class CreateTable:
         curs.execute(de)
         conn.commit()
         conn.close()
-        
+
+    #For Validating the Username and Password from the DataBase.   
     def Validate(username):
         conn=sql.connect("Accounting.sqlite3")
         curs=conn.cursor() 
-        curs.execute('select Dummy,User_Name,Password from test where User_Name=?',(username,))
-        data=curs.fetchall()
-        conn.close()
-        return (data)
-    
-    def CheckUsername(username):
-        conn=sql.connect("Accounting.sqlite3")
-        curs=conn.cursor() 
-        curs.execute('select User_Name from test where User_Name=?',(username,))
+        curs.execute('select Dummy,User_Name,Password from Authentication where User_Name=?',(username,))
         data=curs.fetchall()
         conn.close()
         return (data)
 
+#For Verifing Whether User Name is Exist or Not..    
+    def CheckUsername(username):
+        conn=sql.connect("Accounting.sqlite3")
+        curs=conn.cursor() 
+        curs.execute('select User_Name from Authentication where User_Name=?',(username,))
+        data=curs.fetchall()
+        conn.close()
+        return (data)
+
+#For creating Excel collecting data..
     def For_Excel(username):
         conn=sql.connect("Accounting.sqlite3")
         curs=conn.cursor() 
@@ -298,11 +303,12 @@ class CreateTable:
             if s==[]:
                 deb1.remove(s)
         return bal1,cr1,deb1
-    
+
+ #For Collecting the data for Showing Year wise records   
     def For_YearBalance(username,year):
         conn=sql.connect("Accounting.sqlite3")
         curs=conn.cursor()
-        baleq="select Date from "+username+"balance where Date like '%"+year+"' and strftime(Date) Group by Date order by Date"
+        baleq="select Date from "+username+"balance where Date like '"+year+"%' and strftime(Date) Group by Date order by Date"
         curs.execute(baleq)
         dates=curs.fetchall()
         allbal=[]
@@ -356,10 +362,11 @@ class CreateTable:
         else:
             return allbal,cr,deb
 
+#For Collecting the data for Showing Month wise records
     def For_MonthBalance(username,month,year):
         conn=sql.connect("Accounting.sqlite3")
         curs=conn.cursor()
-        baleq="select Date from "+username+"balance where Date like '__-"+month+"-"+year+"' and strftime(Date) Group by Date order by Date"
+        baleq="select Date from "+username+"balance where Date like '"+year+"-"+month+"-__' and strftime(Date) Group by Date order by Date"
         curs.execute(baleq)
         dates=curs.fetchall()
         allbal=[]
@@ -413,6 +420,7 @@ class CreateTable:
         else:
             return allbal,cr,deb
 
+#-------------------------------------------------------
 #Example Test
 #colum="Name varchar(225),Ram varchar(225)"    
 #CreateTable.CreateTab(colum,"name10")

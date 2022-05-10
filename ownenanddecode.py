@@ -1,3 +1,4 @@
+#Here We Encode the data that was Going to Stored in the Data base to save the data from external Access.
 class Encodess():
     def Encodes(data):
         encodestr=""
@@ -18,6 +19,7 @@ class Encodess():
                     encodestr=encodestr+enco[j]+"0"
         return encodestr
 
+#Here Decoding of the Encoded data will be done.
 class Decodess():
     def Decodes(data):
         decodestr=""
@@ -39,5 +41,6 @@ class Decodess():
             decodestr=decodestr+i
         return decodestr
 
+#For Checking:-
 #print(Decodess.Decodes('12As044Ww044Ww0'))
 #print(Decodess.Decodes('45We044Ww044Ww0'))

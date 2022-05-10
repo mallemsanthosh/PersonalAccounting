@@ -23,6 +23,11 @@ def Submit(entries,screen,entries1,screenreg):
     screen.destroy()
     screenreg.destroy()            #Destroy the Screen
 
+def destroy1(e1,r):
+    r.destroy()
+    global entries
+    entries.pop(e1)
+    
 #Defining the Frame
 def Mainview(firstsheet,cfont):
     global entries
@@ -32,6 +37,8 @@ def Mainview(firstsheet,cfont):
     lab = tk.Label(row, width=15, text=("Enter"+str(i)) + "\t: ", anchor='w',background='#FFFACD')
     ent = tk.Entry(row, width=15,font=cfont)
     ent.insert(0, "")
+    if(i!=1):
+        button=Button(row, width=15,text="Delete",bg="gold",command= lambda e1=i,r=row : destroy1(e1,r))
     row.pack(side=tk.TOP,
                  fill=tk.X,
                  padx=100,
@@ -39,14 +46,17 @@ def Mainview(firstsheet,cfont):
     lab.pack(side=tk.LEFT)
     ent.pack(side=tk.LEFT,
                  fill=tk.X)
+    if(i!=1):
+        button.pack(side=tk.LEFT,padx=5)
     entries[i]= ent
     return ()
 
 # Conformation Screen
 def Conformation(screen,conformation,entries1,screenreg):
         conformation.destroy()
-        Submit(entries,screen,entries1,screenreg)        
+        Submit(entries,screen,entries1,screenreg)      
 
+#For Checking All fields are Entered or Not..
 def ConformationScreen(screen,entries1,screenreg,row1):
     error=False
     for j in entries:
@@ -55,6 +65,7 @@ def ConformationScreen(screen,entries1,screenreg,row1):
             error=True
             break
     if error==False:
+        #For Conforming to Submit
         conformation=tk.Tk()
         conformation.title("Conformation")
         conformation.configure(bg="white")
@@ -71,9 +82,17 @@ def FirstSheet(entries1,screenreg):
     #firstsheet.geometry('500x500')
     cfont = TkFont.Font(family='Times New Roman', size = 12)
 
-    Commonscreen(firstsheet,"Table or Accounting Stucture",'Create Your Fields Structure')    
-    Mainview(firstsheet,cfont)  
+    #Creating the Title
+    Commonscreen.Commonscreen(firstsheet,"Table or Accounting Stucture",'Create Your Fields Structure')
     
+    #Global Variables
+    global i 
+    i = 0   
+
+    #For layout
+    Mainview(firstsheet,cfont)  
+
+    #For Submit and Exit Components 
     row3 = tk.Frame(firstsheet,background='#FFFACD')
     b1=tk.Button(row3,text="Submit",command=lambda: ConformationScreen(firstsheet,entries1,screenreg,labeler))
     b1.pack(side=tk.LEFT)
@@ -84,9 +103,11 @@ def FirstSheet(entries1,screenreg):
                  padx=150,
                  pady=10,anchor=CENTER)
 
+    #For adding extra field to Enter Our Response
     row2 = tk.Frame(firstsheet,background='#FFFACD')
     btn = tk.Button(row2, width=15,text="ADD", command = (lambda  : Mainview(firstsheet,cfont)))
     btn.pack(side=tk.LEFT, padx=10)
+    #For Alert
     labeler=Label(row2,text="",background='#FFFACD',fg='red').pack()
     row2.pack(side=tk.BOTTOM,
             fill=tk.X,
@@ -95,9 +116,10 @@ def FirstSheet(entries1,screenreg):
     
     firstsheet.mainloop()
 
-#Checking Whether Table is created or Not.
+#Execution Start From Here...
 class Tablemain():
     def Mainloop(entriess,screenreg):
         FirstSheet(entriess,screenreg)
 
+#For Checking:-
 #tablemain.mainloop()

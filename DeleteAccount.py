@@ -1,10 +1,15 @@
+#Tkinter Packages and Library Related Imports
 import tkinter as tk
 from tkinter import *
-from CreatingTable import *
+
+#System and Os Related Imports
 import sys
 import os
 
+#For Calling Classes and Function These Imports are Used.
+from CreatingTable import *
 
+#Conforming the Delete of Account..
 def Conformation(username,conformation):
     conformation.destroy()
     CreateTable.DeleteAccount(username)
@@ -12,6 +17,7 @@ def Conformation(username,conformation):
     os.execl(python, python, * sys.argv)        
 
 
+#This Class will ask conformation for deleting the account and Delete the User Account..
 class DeleteAccount:
     def Delete_Account(username):   
         conformation=tk.Tk()
@@ -24,5 +30,5 @@ class DeleteAccount:
         b2=Button(conformation,text="No",bg="gold",command=conformation.destroy)
         b2.pack(padx=50,pady=10,side=LEFT)    
         
-
+#For Checking:-
 #DeleteAccount.Delete_Account('Ramsai')

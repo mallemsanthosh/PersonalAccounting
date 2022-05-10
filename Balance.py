@@ -1,16 +1,24 @@
-from asyncio.windows_events import NULL
+#Tkinter Library and Packages Imports
 import tkinter as tk
 from tkinter import *
+from tkcalendar import Calendar, DateEntry
+
+#Excel Related Imports
+import csv
+import pandas as pa
+
+#For Calling the Class and Functions These Local Files are imported
 from commoncode import *
 from CreatingTable import *
 from ownenanddecode import *
+
 
 def Bal_SubmitEntry(entries,bal_fields,fields,row,username,row2,cfont,b1):
     Bal_fields_list=[]
     
     for b in bal_fields:
         if b=="Bal_Date":
-            Bal_fields_list.append(str(entries['Date'].get()))
+            Bal_fields_list.append(str(entries['Date'].get_date()))
         elif b!="Bal_Total":
             Bal_fields_list.append(str(entries[b].get()))
     
@@ -22,7 +30,7 @@ def Bal_SubmitEntry(entries,bal_fields,fields,row,username,row2,cfont,b1):
 
     CreateTable.BalanceEntry(Bal_fields_list,fields,username)
     
-    data,cr_data,deb_data=CreateTable.CheckBalance(username,str(entries['Date'].get()))
+    data,cr_data,deb_data=CreateTable.CheckBalance(username,str(entries['Date'].get_date()))
 
     Label(row,text="Current Balances",font=cfont,fg='purple2').pack(anchor=CENTER)
     for i in range (0,len(fields)):
@@ -152,7 +160,7 @@ class BalanceEntry:
     def BalanceUpdate(username):
         balance=tk.Tk()
         cfont = TkFont.Font(family='Times New Roman', size = 12)
-        Commonscreen(balance,"Balance Update Table",'Balance Update Table')
+        Commonscreen.Commonscreen(balance,"Balance Update Table",'Balance Update Table')
         cr_fields,de_fields,bal_fields,fields=CreateTable.Fields(username)
 
         row1=tk.Frame(balance,background="#FFFACD")
@@ -168,8 +176,12 @@ class BalanceEntry:
             if field!='Bal_Total':    
                 lab1 = tk.Label(row, width=15, text=field, anchor='w',background="#FFFACD",font=cfont)
                 lab2 = tk.Label(row, text=": ", anchor='w',background="#FFFACD",font=cfont)
-                ent = tk.Entry(row,width=20)
-                ent.insert(0,"0")
+                if field == "Date":
+                    ent = DateEntry(row, width=12, background='darkblue',
+                    foreground='white', borderwidth=2)
+                else:
+                    ent = tk.Entry(row,width=20)
+                    ent.insert(0,"0")
                 row.pack(side=tk.TOP,
                         fill=tk.X,
                         padx=5,
@@ -183,8 +195,6 @@ class BalanceEntry:
 
         row2=tk.Frame(balance,background="#FFFACD")
         row2.pack(side=tk.TOP,
-                        padx=50,
-                        pady=20,
                         anchor=CENTER)
         
         row3=tk.Frame(balance,background="#FFFACD")
@@ -201,7 +211,7 @@ class BalanceEntry:
     def BalanceCheck(username):
         balance=tk.Tk()
         cfont = TkFont.Font(family='Times New Roman', size = 12)
-        Commonscreen(balance,"Balance Check Sheet of Date Table",'Balance Check Sheet of Date Table')
+        Commonscreen.Commonscreen(balance,"Balance Check Sheet of Date Table",'Balance Check Sheet of Date Table')
         cr_fields,de_fields,bal_fields,fields=CreateTable.Fields(username)
 
         row1=tk.Frame(balance,background="#FFFACD")
@@ -240,7 +250,7 @@ class BalanceEntry:
     def Bal_Check_Current(username):
         balance=tk.Tk()
         cfont = TkFont.Font(family='Times New Roman', size = 12)
-        Commonscreen(balance,"Balance Table",'Balance Table')
+        Commonscreen.Commonscreen(balance,"Balance Table",'Balance Table')
         cr_fields,de_fields,bal_fields,fields=CreateTable.Fields(username)   
 
         row2=tk.Frame(balance,background="#FFFACD")
@@ -249,7 +259,7 @@ class BalanceEntry:
                         pady=20,
                         anchor=CENTER)
 
-        data,cr_data,deb_data=CreateTable.CheckBalance(username,NULL)
+        data,cr_data,deb_data=CreateTable.CheckBalance(username,null)
         Label(row2,text="Current Balances",font=cfont,fg='purple2').pack(anchor=CENTER)
         for i in range (0,len(fields)):
             row11 = tk.Frame(row2,background="#FFFACD")
@@ -273,7 +283,7 @@ class BalanceEntry:
     def BalanceCheck_Year(username):
         balance=tk.Tk()
         cfont = TkFont.Font(family='Times New Roman', size = 12)
-        Commonscreen(balance,"Balance Check Sheet of Year",'Balance Check Sheet Year')
+        Commonscreen.Commonscreen(balance,"Balance Check Sheet of Year",'Balance Check Sheet Year')
         cr_fields,de_fields,bal_fields,fields=CreateTable.Fields(username)
 
         row1=tk.Frame(balance,background="#FFFACD")
@@ -312,7 +322,7 @@ class BalanceEntry:
     def BalanceCheck_Month(username):
         balance=tk.Tk()
         cfont = TkFont.Font(family='Times New Roman', size = 12)
-        Commonscreen(balance,"Balance Check Sheet of Month",'Balance Check Sheet Month')
+        Commonscreen.Commonscreen(balance,"Balance Check Sheet of Month",'Balance Check Sheet Month')
         cr_fields,de_fields,bal_fields,fields=CreateTable.Fields(username)
 
         row1=tk.Frame(balance,background="#FFFACD")
@@ -361,9 +371,56 @@ class BalanceEntry:
         b2.pack(padx=20,side=RIGHT)
         balance.mainloop()
 
+class To_Excel:
+    def Excel_Conformation(username,conformation):
+        conformation.destroy()
+        bal,cr,deb=CreateTable.For_Excel(username)
+        cr_fields,de_fields,bal_fields,fields=CreateTable.Fields(username)
+        field=[]
+        for fiel in range(len(cr_fields)):
+            if(cr_fields[fiel]=="Cr_Date"):
+                field.append("Date")
+            else:
+                field.append(cr_fields[fiel])
+            if(de_fields[fiel]!="Deb_Date"):
+                field.append(de_fields[fiel])
+            if(bal_fields[fiel]!="Bal_Date"):
+                field.append(bal_fields[fiel])
+        data=[]
+        for i in range(len(bal)):
+            data.append([])
+            for j in range(len(bal[i])):
+                if j!=0 and len(cr[i])!=1:
+                    data[i].append(cr[i][j])
+                elif j!=0 and len(cr[i])==1:
+                    data[i].append(0)
+                if j!=0 and len(deb[i])!=1:
+                    data[i].append(deb[i][j])
+                elif j!=0 and len(deb[i])==1:
+                    data[i].append(0)
+                data[i].append(bal[i][j])
+        
+        with open("Moneyaccount.csv",'w') as files:
+            csvwriter=csv.writer(files)
+            csvwriter.writerow(field)
+            csvwriter.writerows(data)
+        df = pa.read_csv('Moneyaccount.csv')
+        df.to_csv('Moneyaccount.csv')
 
+    def To_Excel(username):
+        conformation=tk.Tk()
+        conformation.title("Conformation")
+        conformation.configure(bg="white")
+        l1=Label(conformation,text="\nAre you really Want to Create Excel Sheet",bg="white")
+        l1.pack()
+        b1=Button(conformation,text="Yes",bg="gold",command=lambda: To_Excel.Excel_Conformation(username,conformation))
+        b1.pack_configure(padx=50,pady=10,side=LEFT)
+        b2=Button(conformation,text="No",bg="gold",command=conformation.destroy)
+        b2.pack(padx=50,pady=10,side=LEFT)
+        
+
+
+#To_Excel.To_Excel("Sai")
 #BalanceEntry.BalanceUpdate('Sai')
-
 #BalanceEntry.BalanceCheck('Sai')
-
 #BalanceEntry.Bal_Check_Current("Ram")
