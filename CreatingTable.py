@@ -1,6 +1,6 @@
 #Sql/DataBase Related Imports
+from asyncio.windows_events import NULL
 import sqlite3 as sql
-from sqlalchemy import null
 
 #For Encoding and Decoding Related Import
 from ownenanddecode import *
@@ -152,7 +152,7 @@ class CreateTable:
     def CheckBalance(username,date):
         conn=sql.connect("Accounting.sqlite3")
         curs=conn.cursor() 
-        if date==null:
+        if date==NULL:
             curs.execute('select * from '+username+'balance order by Date')
             data=curs.fetchall()
             date=data[-1][0]    
