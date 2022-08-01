@@ -29,7 +29,6 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install install pysqlite3
         python -m pip install random2
-        python -m pip install tkinter
         
         python -m pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
